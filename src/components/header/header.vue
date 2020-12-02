@@ -3,10 +3,10 @@
       <div class="header">
           <img src="../../assets/logo.png">
           <div>
-            <h3>狗眼电影</h3>
+            <p>狗眼电影</p>
             <p>一手资讯，上狗眼电影就够了！</p>
-            <input type="text" placeholder="请输入电影名" autofocus>
           </div>
+          <input type="text" placeholder="请输入电影名" autofocus>
       </div>
       <div class="nav">
           <a href="#">正在热映</a>
@@ -21,6 +21,46 @@ export default {
 }
 </script>
 
-<style>
-  
+<style scoped>
+ .header {
+     display: flex;
+     height: 70px;
+     justify-content: center;
+     align-items: center;
+ }
+ .header img {
+     width: 40px;
+     height: 40px;
+     padding-left: 5%;
+     margin: auto 0;
+ }
+ .header div {
+     margin-left: 6px;
+     flex:1;
+     height: 100%;
+     margin: auto;
+ }
+  .header div p:first-child{
+      line-height: 30px;
+      font-size: 20px;
+      font-weight: bold;
+      letter-spacing: 3px;
+  }
+   .header div p:last-child{
+      line-height: 20px;
+      color: var(--font-color);
+  }
+ .header input {
+     flex:1;
+     border-radius: 15px;
+     border: 0;
+     box-shadow: 5px 5px 5px rgba(235, 234, 234,.4);
+     height: 50px;
+     margin: auto 3%;
+ }
+  .nav {
+      width: 100%;
+      line-height: 50px;
+      background-color: var(--gcolor);
+  }
 </style>

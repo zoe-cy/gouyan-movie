@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    index
     <vheader></vheader>
   </div>
 </template>
@@ -14,6 +13,8 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+</style>>
  
 </style>
