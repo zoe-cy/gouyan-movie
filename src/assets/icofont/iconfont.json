@@ -1,0 +1,30 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "2420315",
+      "name": "箭头",
+      "font_class": "arrow-left",
+      "unicode": "e502",
+      "unicode_decimal": 58626
+    },
+    {
+      "icon_id": "3647076",
+      "name": "箭头",
+      "font_class": "arrow-left1",
+      "unicode": "e672",
+      "unicode_decimal": 58994
+    },
+    {
+      "icon_id": "9626785",
+      "name": "实心星星",
+      "font_class": "start",
+      "unicode": "e501",
+      "unicode_decimal": 58625
+    }
+  ]
+}

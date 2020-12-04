@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta name="viewport" charset="utf-8" content="width=device-width, height=device-height, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
-    <title>doubanAPI</title>
-    <style type="text/css">
-  body,div,ul,p,h1,h2,h3 {
-    margin: 0;
-    padding: 0;
-  }
-	      body {
-          background: rgba(206, 218, 228, 0.548);
-          --gcolor: #DA3831;
-          --font-color:#a2a4ac;
-          --sub-color:#5d5e61;
-        }
-        a{
-          text-decoration: none;
-        }
-        @font-face {font-family: "iconfont";
+@font-face {font-family: "iconfont";
   src: url('iconfont.eot?t=1607091563359'); /* IE9 */
   src: url('iconfont.eot?t=1607091563359#iefix') format('embedded-opentype'), /* IE6-IE8 */
   url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAMMAAsAAAAABwQAAAK+AAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDFAqBRIE7ATYCJAMQCwoABCAFhG0HShsnBsiemjwpEdgHHomCAgKBoniI9vvfmd15qul/1JI1sS4iiUSleoLWNQUyXsK9z66+DnKHx1V4dGRUz86q59X02UHmVIjgGB+MFF320QABr/PTYbbe57mc3sqyQOa3LJc1B7XxqBdgHFCge2CbrEAOyDtsFzE48IJe6zKBvi0yuZ0vr20AXwnNCsQLVekF305ayqjWFdoTG1N80tItH8oLgI/y9/EfLPlStCq08OLzsgEo/On2RnWmmXGXEzIEd3sLFYeAJB5Olm/zEJHAQ/80T0eAthTKT/c3ahrOVEk37wx32fPHK0QbahyCo26l8tONqhuLuysj+EUNCvwMSxdS7yBwAeJvMAU+aMH/1cFa6sDeTBrurz/MpnPlkD1D+d78+WvuAN59yeYbO+O3gnpa+3ra+4IMGRtzGl2jTblNjkIbboUju9RXdhZC8q4uLi9Oiy/EVeXXVPvJF+3Kl7+DYetPqg1NkZ/UK5EfIz5ar0R8aqIBNNfVrV5wyGfyRPWpPtR82+XG6+Wdre5J7t2ABD/+c7ubaq4T9nl1PxoJ7FID7MlShzyZuZ6qq2hagGYW9PXRAIrP/TzDugIXCd2Obke0Y7NA1bWLTN4htAwcRVvXKfQdVLF9YIF4iOzhgEUHYeoUxdh3VFOvZPJ+oGXtD9qmeaDvekQcOLAn1b+EsFfiAOsbZWq/cHHik/6quQ6VQUcvtXVS2ISkqzlmNpj6tQp0IZ2xRB9SLFJyxkk4WblzHTocgmkkbNgvDVYptWyjkU99yNAvnODvHIJ6SWgA02cUo+onuHA+WPIffL8OUgxy6EULrIV8E0R06uiMmYEJQFaYXSDWt9yiG6KwkCSO4YjgxJQ745CDg8Bo0+NsUD/JwLqjqMlmxP041Gy43+q04SHoQxxllKiR0dJ/RCSGsxzIZYDpNnvpspckAAAA') format('woff2'),
@@ -46,10 +27,3 @@
   content: "\e501";
 }
 
-
-    </style>
-  </head>
-  <body>
-    <div id="app">init</div>
-  </body>
-</html>

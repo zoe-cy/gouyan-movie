@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <search></search>
+    <filmDetail></filmDetail>
+    <filmComments></filmComments>
   </div>
 </template>
 
@@ -8,11 +9,15 @@
 import vheader from './components/header/header'
 import spinner from './components/spinner/spinner.vue'
 import search from './components/search.vue'
+import filmDetail from './components/filmDetail.vue'
+import filmComments from './components/filmComments'
 export default {
      components: {
        vheader,
        spinner,
-       search
+       search,
+       filmDetail,
+       filmComments
      }
 }
 </script>
