@@ -1,14 +1,18 @@
 <template>
   <div id="app">
-    <vheader></vheader>
+    <search></search>
   </div>
 </template>
 
 <script>
 import vheader from './components/header/header'
+import spinner from './components/spinner/spinner.vue'
+import search from './components/search.vue'
 export default {
      components: {
-       vheader
+       vheader,
+       spinner,
+       search
      }
 }
 </script>

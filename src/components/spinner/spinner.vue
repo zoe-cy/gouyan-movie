@@ -1,10 +1,10 @@
 <template>
   <div class="spinner">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-    <div class="rect5"></div>
+    <div class="spin1"></div>
+    <div class="spin2"></div>
+    <div class="spin3"></div>
+    <div class="spin4"></div>
+    <div class="spin5"></div>
   </div>
 </template>
 
@@ -13,57 +13,48 @@
   }
 </script>
 
-<style>
-  .spinner {
-    margin: 100px auto;
-    width: 50px;
-    height: 60px;
-    text-align: center;
-    font-size: 10px;
-  }
-   
-  .spinner > div {
-    background-color: #df2d2d;
-    height: 100%;
-    width: 6px;
-    display: inline-block;
-     
-    -webkit-animation: stretchdelay 1.2s infinite ease-in-out;
-    animation: stretchdelay 1.2s infinite ease-in-out;
-  }
-   
-  .spinner .rect2 {
-    -webkit-animation-delay: -1.1s;
-    animation-delay: -1.1s;
-  }
-   
-  .spinner .rect3 {
-    -webkit-animation-delay: -1.0s;
-    animation-delay: -1.0s;
-  }
-   
-  .spinner .rect4 {
-    -webkit-animation-delay: -0.9s;
-    animation-delay: -0.9s;
-  }
-   
-  .spinner .rect5 {
-    -webkit-animation-delay: -0.8s;
-    animation-delay: -0.8s;
-  }
-   
-  @-webkit-keyframes stretchdelay {
-    0%, 40%, 100% { -webkit-transform: scaleY(0.4) } 
-    20% { -webkit-transform: scaleY(1.0) }
-  }
-   
-  @keyframes stretchdelay {
-    0%, 40%, 100% {
-      transform: scaleY(0.4);
-      -webkit-transform: scaleY(0.4);
-    }  20% {
-      transform: scaleY(1.0);
-      -webkit-transform: scaleY(1.0);
+<style scoped>
+    .spinner {
+      display: flex;
+      justify-content: center;
+      height: 400px;
+      align-items: center;
     }
-  }
+    .spinner div {
+      width: 10px;
+      height: 30px;
+      background: var(--gcolor);
+      margin: 0 2px;
+      border-radius: 6%;
+      box-shadow: 0 0 2px rgb(238, 125, 125);
+      animation: dura 2s ease-out infinite;
+    }
+    .spinner div:nth-child(2) {
+      animation-delay: .3s;
+      -webkit-animation-delay: .3s;
+      -moz-animation-delay: .3s;
+    }
+    .spinner div:nth-child(3) {
+      animation-delay: .5s;
+      -webkit-animation-delay: .5s;
+      -moz-animation-delay: .5s;
+    }
+    .spinner div:nth-child(4) {
+      animation-delay: .7s;
+      -webkit-animation-delay: .7s;
+      -moz-animation-delay: .7s;
+    }
+    .spinner div:nth-child(5) {
+      animation-delay: 1s;
+      -webkit-animation-delay: 1s;
+      -moz-animation-delay: 1s;
+    }
+    @keyframes dura {
+      30% {
+        height: 60px;
+      }
+      60% {
+        height: 30px;
+      }
+    }
 </style>
