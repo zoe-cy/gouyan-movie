@@ -2,7 +2,7 @@
     <div class="comments">
         <div class="header">
             <a class="iconfont icon-arrow-left"></a>
-            <span>全部影评--流浪地球</span>
+            <span>短评--流浪地球</span>
         </div>
         <div class="shortcom">
             <h3>热门短评</h3>

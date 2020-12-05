@@ -6,23 +6,23 @@
   "description": "",
   "glyphs": [
     {
-      "icon_id": "2420315",
-      "name": "箭头",
-      "font_class": "arrow-left",
-      "unicode": "e502",
-      "unicode_decimal": 58626
-    },
-    {
       "icon_id": "3647076",
       "name": "箭头",
-      "font_class": "arrow-left1",
+      "font_class": "arrow-left",
       "unicode": "e672",
       "unicode_decimal": 58994
     },
     {
-      "icon_id": "9626785",
+      "icon_id": "6988646",
       "name": "实心星星",
       "font_class": "start",
+      "unicode": "e505",
+      "unicode_decimal": 58629
+    },
+    {
+      "icon_id": "13961593",
+      "name": "实心星星",
+      "font_class": "start1",
       "unicode": "e501",
       "unicode_decimal": 58625
     }
