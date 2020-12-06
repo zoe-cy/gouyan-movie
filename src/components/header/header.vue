@@ -6,7 +6,7 @@
             <p>狗眼电影</p>
             <p>查资讯，上狗眼电影就够了！</p>
           </div>
-          <input type="text" placeholder="请输入电影名" autofocus>
+          <input type="text" placeholder="请输入电影名" @click="searching">
       </div>
       <div class="nav">
           <a href="#">正在热映</a>
@@ -17,7 +17,11 @@
 
 <script>
 export default {
-
+   methods:{
+       searching(){
+           this.$router.push({name:'searchs'})
+       }
+   }
 }
 </script>
 
@@ -60,6 +64,7 @@ export default {
      margin: auto 3%;
      font-size: 16px;
      color: var(--font-color);
+     background: white;
  }
   .header input::-webkit-input-placeholder{
       color: var(--font-color);

@@ -1,8 +1,8 @@
 <template>
   <div class="search">
     <div class="header">
-      <input type="text" @keyup.enter="searching" ref="ipt"/>
-      <p>取消</p>
+      <input type="text" @keyup.enter="searching" ref="ipt" />
+      <span @click="goback">取消</span>
     </div>
     <div v-if="flag">
       <p>热门搜索</p>
@@ -15,14 +15,22 @@
       </div>
     </div>
     <div v-else>
-      <div class="intro" v-for="item in arr" :key=item.id @click="gohead(item.id)">
-        <div class="ins">
-          <img src="../assets/logo.png" />
+      <div
+        class="intro"
+        v-for="item in arr"
+        :key="item.id"
+        @click="gohead(item.id)"
+      >
+        <div class="box">
+          <div class="ins">
+            <img src="../assets/logo.png" />
+          </div>
+          <div class="infos">
+            <h2>{{ item.name }}</h2>
+            <p>{{ item.info }}</p>
+          </div>
         </div>
-        <div class="infos">
-          <h2>{{item.name}}</h2>
-          <p>{{item.info}}</p>
-        </div>
+        <hr />
       </div>
     </div>
   </div>
@@ -33,33 +41,36 @@ export default {
     return {
       val: "",
       id: "",
-      arr:[],
+      arr: [],
       flag: true,
     };
   },
   methods: {
     searching() {
-      this.val = this.$refs.ipt.value
+      this.val = this.$refs.ipt.value;
       this.$http
-        .get("http://192.168.0.103:8888/search",{
-            params:{name:this.val}
+        .get("http://192.168.0.103:8888/search", {
+          params: { name: this.val },
         })
         .then(
           function (res) {
             if (res.status === 200) {
-              this.arr = res.data
+              this.arr = res.data;
               this.flag = false;
             } else {
               console.log(res.status);
             }
           },
           function (res) {
-            console.log("failed",res.status);
+            console.log("failed", res.status);
           }
         );
     },
-    gohead(id){
-        this.$router.push({name:'filmDetail',params:{id:this.id}})
+    gohead(id) {
+      this.$router.push({ name: "filmDetail", params: { id } });
+    },
+    goback(){
+      window.history.go(-1)
     }
   },
 };
@@ -84,7 +95,7 @@ export default {
   font-size: 16px;
   color: var(--font-color);
 }
-.header p {
+.header span {
   margin-left: 2%;
   font-size: 18px;
   color: var(--sub-color);
@@ -115,17 +126,22 @@ p {
   color: var(--gcolor);
 }
 .intro {
-    overflow: hidden;
-    margin-bottom: 10px;
+  margin-left: 2%;
+  margin-right: 2%;
+  margin-top: 10px;
+  overflow: hidden;
 }
-.intro .ins{
-    float: left;
-    margin-right: 10px;
+.intro .box {
+  overflow: hidden;
+}
+.intro .ins {
+  float: left;
+  margin-right: 10px;
 }
 .infos p {
-    height: 30px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  height: 30px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 </style>

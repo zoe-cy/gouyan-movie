@@ -6,10 +6,16 @@ import searchs from '../components/searchs.vue'
 import filmDetail from '../components/filmDetail.vue'
 import filmComments from '../components/filmComments'
 import shortComments from '../components/shortComments'
+import hotFilms from '../components/hotFilms'
 Vue.use(Router)
 
 export default new Router({
     routes:[
+        {
+            path:'/hotFilms',
+            name:'hotFilms',
+            component:hotFilms
+        },
         {
             path:'/vheader',
             name:'vheader',

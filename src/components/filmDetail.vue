@@ -1,74 +1,110 @@
 <template>
   <div class="details">
-    <div v-for="(value, key) in obj" :key="key">
+    <div>
       <div class="header">
-        <a class="iconfont icon-arrow-left"></a>
-        <span>{{obj[name]}}</span>
+        <span class="iconfont icon-arrow-left" @click="goback"></span>
+        <span>{{ obj.name}}</span>
       </div>
       <div class="intro">
         <div class="ins">
           <img src="../assets/logo.png" />
         </div>
         <div class="infos">
-          <h2>{{obj[name]}}</h2>
+          <h2>{{ obj.name }}</h2>
           <div class="mark">
             <span class="star"></span>
             <span class="grade"></span>
           </div>
-          <p>{{obj[ratingNum]}}({{obj[ratingUser]}}人评分)</p>
-          <p>{{obj[date]}}</p>
-          <p>{{obj[type]}}</p>
-          <p>{{obj[adress]}}</p>
+          <p>{{ obj.ratingNum | rateFormat }}({{ obj.ratingUser }}人评分)</p>
+          <p>{{ obj.date }}</p>
+          <p>{{ obj.type }}</p>
+          <p>{{ obj.adress }}</p>
         </div>
       </div>
       <div class="datas">
-        <div>{{obj[think_sen]}}人想看</div>
-        <div>{{obj[have_sen]}}人看过</div>
+        <div>{{ obj.think_sen }}人想看</div>
+        <div>{{ obj.have_sen }}人看过</div>
       </div>
       <p class="outline">
-        {{obj[info]}}
+        {{ obj.info }}
       </p>
       <div class="actors">
         <h3 class="subtitle">演职人员</h3>
         <div class="msgsrc">
-          <div class="listsrc" v-for="item in obj[directorList]" :key=item>
+          <div class="listsrc" v-for="item in obj.directorList" :key="item">
             <div class="imgs">
               <img src="../assets/logo.png" />
             </div>
-            <div class="names">{{item.name}}$nbsp导演</div>
+            <div class="names">{{ item.name }}&nbsp导演</div>
           </div>
-          <div class="listsrc" v-for="item in obj[actorList]" :key=item>
+          <div class="listsrc" v-for="item in obj.actorList" :key="item">
             <div class="imgs">
               <img src="../assets/logo.png" />
             </div>
-            <div class="names">{{item.name}}</div>
+            <div class="names">{{ item.name }}</div>
+          </div>
+           <div class="listsrc" v-for="item in obj.actorList" :key="item">
+            <div class="imgs">
+              <img src="../assets/logo.png" />
+            </div>
+            <div class="names">{{ item.name }}</div>
+          </div>
+           <div class="listsrc" v-for="item in obj.actorList" :key="item">
+            <div class="imgs">
+              <img src="../assets/logo.png" />
+            </div>
+            <div class="names">{{ item.name }}</div>
+          </div>
+           <div class="listsrc" v-for="item in obj.actorList" :key="item">
+            <div class="imgs">
+              <img src="../assets/logo.png" />
+            </div>
+            <div class="names">{{ item.name }}</div>
+          </div>
+           <div class="listsrc" v-for="item in obj.actorList" :key="item">
+            <div class="imgs">
+              <img src="../assets/logo.png" />
+            </div>
+            <div class="names">{{ item.name }}</div>
+          </div>
+           <div class="listsrc" v-for="item in obj.actorList" :key="item">
+            <div class="imgs">
+              <img src="../assets/logo.png" />
+            </div>
+            <div class="names">{{ item.name }}</div>
+          </div>
+           <div class="listsrc" v-for="item in obj.actorList" :key="item">
+            <div class="imgs">
+              <img src="../assets/logo.png" />
+            </div>
+            <div class="names">{{ item.name }}</div>
           </div>
         </div>
       </div>
-      <div class="shortcom">
-        <h3>热门短评</h3>
-        <div class="opin">
-          <div class="mark shmark">
-            <span class="star"></span>
-            <span class="grade"></span>
-          </div>
-          <span class="times">2019</span>
-        </div>
-        <p>rrrrrrrrrrrrrrrrrrrr</p>
-        <div class="users">
-           
-          <div class="imgs">
-            <img src="../assets/logo.png" />
-          </div>
-           
-          <div class="names">dfg</div>
-        </div>
-        <hr />
-      </div>
-      <div class="btn">查看全部短评</div>
-      <hr />
-      <div class="btn">查看全部影评</div>
     </div>
+    <div class="shortcom">
+      <h3>热门短评</h3>
+      <div class="opin">
+        <div class="mark shmark">
+          <span class="star"></span>
+          <span class="grade"></span>
+        </div>
+        <span class="times">2019</span>
+      </div>
+      <p>rrrrrrrrrrrrrrrrrrrr</p>
+      <div class="users">
+         
+        <div class="imgs">
+          <img src="../assets/logo.png" />
+        </div>
+         
+        <div class="names">dfg</div>
+      </div>
+      <hr />
+    </div>
+    <div class="btn">查看全部短评</div>
+    <hr />
+    <div class="btn">查看全部影评</div>
   </div>
 </template>
 <script>
@@ -76,31 +112,36 @@ export default {
   data: function () {
     return {
       obj: {},
+      swidth:0
     };
   },
-  created:function(){
-       console.log('ids',this.$route.params.id)
+  methods:{
+     goback(){
+       window.history.go(-1)
+     }
   },
-  mounted:function() {
-    console.log('id',this.$route.params.id)
+  created: function () {
+  
+  },
+  mounted: function () {
     this.$http
-      .post("http://192.168.0.103:8888/movieInfo", 
-        {id:this.$route.params.id},
-        {emulateJSON:true}
-      )
-      .then(
-        function (res) {
-          if (res.status === 200) {
-              console.log(res)
-            this.obj = res.data;
-          } else {
-            console.log(res.status);
+        .post("http://192.168.0.103:8888/movieInfo", {
+          id: this.$route.params.id,
+        })
+        .then(
+          function (res) {
+            if (res.status === 200) {
+              this.obj = res.data;
+              // this.swidth = (this.obj.ratingNum*100+'%')-
+              console.log(this.obj)
+            } else {
+              console.log(res.status);
+            }
+          },
+          function (res) {
+            console.log("failed");
           }
-        },
-        function (res) {
-          console.log("failed");
-        }
-      );
+        );
   },
 };
 </script>
@@ -116,12 +157,12 @@ export default {
   letter-spacing: 2px;
   text-align: center;
 }
-.header a {
+.header .iconfont {
   position: absolute;
   left: 3%;
   line-height: 60px;
 }
-.header a::before {
+.header .iconfont::before {
   font-size: 34px;
 }
 .header span {
@@ -226,6 +267,7 @@ h3 {
   display: flex;
   flex-wrap: nowrap;
   overflow: hidden;
+  border: 1px solid #000;
 }
 .msgsrc .listsrc {
   width: 70px;
