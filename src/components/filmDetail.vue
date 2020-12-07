@@ -3,7 +3,7 @@
     <div>
       <div class="header">
         <span class="iconfont icon-arrow-left" @click="goback"></span>
-        <span>{{ obj.name}}</span>
+        <span>{{ obj.name }}</span>
       </div>
       <div class="intro">
         <div class="ins">
@@ -13,10 +13,10 @@
           <h2>{{ obj.name }}</h2>
           <div class="mark">
             <span class="star"></span>
-            <span class="grade"></span>
+            <span class="grade" :style="{ '--swidth': widths }"></span>
           </div>
-          <p>{{ obj.ratingNum | rateFormat }}({{ obj.ratingUser }}人评分)</p>
-          <p>{{ obj.date }}</p>
+          <p>{{ ratingNum | rateFormat }}({{ obj.ratingUser }}人评分)</p>
+          <p>{{ obj.date | dateFormat }}</p>
           <p>{{ obj.type }}</p>
           <p>{{ obj.adress }}</p>
         </div>
@@ -35,7 +35,7 @@
             <div class="imgs">
               <img src="../assets/logo.png" />
             </div>
-            <div class="names">{{ item.name }}&nbsp导演</div>
+            <div class="names">{{ item.name }} [导演]</div>
           </div>
           <div class="listsrc" v-for="item in obj.actorList" :key="item">
             <div class="imgs">
@@ -43,66 +43,31 @@
             </div>
             <div class="names">{{ item.name }}</div>
           </div>
-           <div class="listsrc" v-for="item in obj.actorList" :key="item">
-            <div class="imgs">
-              <img src="../assets/logo.png" />
-            </div>
-            <div class="names">{{ item.name }}</div>
-          </div>
-           <div class="listsrc" v-for="item in obj.actorList" :key="item">
-            <div class="imgs">
-              <img src="../assets/logo.png" />
-            </div>
-            <div class="names">{{ item.name }}</div>
-          </div>
-           <div class="listsrc" v-for="item in obj.actorList" :key="item">
-            <div class="imgs">
-              <img src="../assets/logo.png" />
-            </div>
-            <div class="names">{{ item.name }}</div>
-          </div>
-           <div class="listsrc" v-for="item in obj.actorList" :key="item">
-            <div class="imgs">
-              <img src="../assets/logo.png" />
-            </div>
-            <div class="names">{{ item.name }}</div>
-          </div>
-           <div class="listsrc" v-for="item in obj.actorList" :key="item">
-            <div class="imgs">
-              <img src="../assets/logo.png" />
-            </div>
-            <div class="names">{{ item.name }}</div>
-          </div>
-           <div class="listsrc" v-for="item in obj.actorList" :key="item">
-            <div class="imgs">
-              <img src="../assets/logo.png" />
-            </div>
-            <div class="names">{{ item.name }}</div>
-          </div>
+        
         </div>
       </div>
     </div>
-    <div class="shortcom">
-      <h3>热门短评</h3>
+    <h3>热门短评</h3>
+    <div class="shortcom" v-for="item in arr" :key="item">
       <div class="opin">
-        <div class="mark shmark">
+        <div class="mark">
           <span class="star"></span>
-          <span class="grade"></span>
+          <span class="grade" :style="{'--cwidth':widthc}"></span>
         </div>
-        <span class="times">2019</span>
+        <span class="times">{{item.dateTime | dateFormate}}</span>
       </div>
-      <p>rrrrrrrrrrrrrrrrrrrr</p>
+      <p>{{item.info}}</p>
       <div class="users">
          
         <div class="imgs">
           <img src="../assets/logo.png" />
         </div>
          
-        <div class="names">dfg</div>
+        <div class="names">{{item.userName}}</div>
       </div>
       <hr />
     </div>
-    <div class="btn">查看全部短评</div>
+    <div class="btn" @click="goShort($route.params.id,obj.name)">查看全部短评</div>
     <hr />
     <div class="btn">查看全部影评</div>
   </div>
@@ -112,36 +77,57 @@ export default {
   data: function () {
     return {
       obj: {},
-      swidth:0
+      ratingNum: 0,
+      widths: "50%",
+      arr:[],
+      widthc:0,
+      ratingLevel:1
     };
   },
-  methods:{
-     goback(){
-       window.history.go(-1)
-     }
-  },
-  created: function () {
-  
+  methods: {
+    goback() {
+      window.history.go(-1);
+    },
+    goShort(id,name){
+       this.$router.push({name:'shortComments',params:{id,name}})
+    }
   },
   mounted: function () {
     this.$http
-        .post("http://192.168.0.103:8888/movieInfo", {
-          id: this.$route.params.id,
-        })
-        .then(
-          function (res) {
-            if (res.status === 200) {
-              this.obj = res.data;
-              // this.swidth = (this.obj.ratingNum*100+'%')-
-              console.log(this.obj)
-            } else {
-              console.log(res.status);
+      .post("http://192.168.0.103:8888/movieInfo", {
+        id: this.$route.params.id,
+      })
+      .then(
+        function (res) {
+          if (res.status === 200) {
+            this.obj = res.data;
+            this.widths = this.obj.ratingNum * 10 + "%";
+            if(this.obj.ratingNum){
+                this.ratingNum = this.obj.ratingNum
             }
-          },
-          function (res) {
-            console.log("failed");
+          } else {
+            console.log(res.status);
           }
-        );
+        },
+        function (res) {
+          console.log("failed");
+        }
+      );
+    this.$http.post("http://192.168.0.103:8888/rtating",{
+      ratingLevel:this.ratingLevel,
+      movieId:this.$route.params.id
+    }).then(
+      function(res){
+        if(res.status === 200){
+          this.arr = res.data
+        } else {
+          console.log(res.status)
+        }
+      },
+      function(res){
+        console.log(res.status)
+      }
+    )
   },
 };
 </script>
@@ -216,7 +202,7 @@ export default {
   position: absolute;
   display: inline-block;
   height: 30px;
-  width: 86%;
+  width: var(--swidth);
   background: url(../assets/start1.png);
   background-repeat: repeat-x;
   background-size: 20px;
@@ -266,8 +252,7 @@ h3 {
 .actors .msgsrc {
   display: flex;
   flex-wrap: nowrap;
-  overflow: hidden;
-  border: 1px solid #000;
+  overflow-x: auto;
 }
 .msgsrc .listsrc {
   width: 70px;
@@ -292,6 +277,9 @@ h3 {
 }
 .shortcom .opin .mark {
   float: left;
+}
+.opin .mark .grade {
+  width: var(--widthc);
 }
 .shortcom .opin .times {
   display: inline-block;

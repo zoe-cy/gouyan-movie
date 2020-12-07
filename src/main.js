@@ -12,6 +12,17 @@ Vue.filter('rateFormat',function(val){
     }
 })
 
+Vue.filter('dateFormat',function(val){
+     const arr = val.split('/')
+     if(arr.length<3){
+        return arr[0]+"年"+arr[1]+"月" 
+     } else {
+        return arr[0]+"年"+arr[1]+"月"+arr[2]+"日"
+     }
+     
+})
+
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
