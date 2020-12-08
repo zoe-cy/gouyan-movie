@@ -49,7 +49,7 @@ export default {
     searching() {
       this.val = this.$refs.ipt.value;
       this.$http
-        .get("http://192.168.0.103:8888/search", {
+        .get("search", {
           params: { name: this.val },
         })
         .then(

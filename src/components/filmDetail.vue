@@ -29,47 +29,68 @@
         {{ obj.info }}
       </p>
       <div class="actors">
-        <h3 class="subtitle">演职人员</h3>
-        <div class="msgsrc">
-          <div class="listsrc" v-for="item in obj.directorList" :key="item">
-            <div class="imgs">
-              <img src="../assets/logo.png" />
+        <h3>演职人员</h3>
+        <div class="msgsrc nullist" v-if="listFlag">
+          <div class="tips">暂无资料</div>
+        </div>
+        <div v-else>
+          <div class="msgsrc">
+            <div class="listsrc" v-for="item in obj.directorList" :key="item">
+              <div class="imgs">
+                <img src="../assets/logo.png" />
+              </div>
+              <div class="names">{{ item.name }} [导演]</div>
             </div>
-            <div class="names">{{ item.name }} [导演]</div>
-          </div>
-          <div class="listsrc" v-for="item in obj.actorList" :key="item">
-            <div class="imgs">
-              <img src="../assets/logo.png" />
+            <div v-if="actorFlag">
+              <div class="listsrc tips">暂无演员资料</div>
             </div>
-            <div class="names">{{ item.name }}</div>
+            <div
+              v-else
+              class="listsrc"
+              v-for="item in obj.actorList"
+              :key="item"
+            >
+              <div class="imgs">
+                <img src="../assets/logo.png" />
+              </div>
+              <div class="names">{{ item.name }}</div>
+            </div>
           </div>
-        
         </div>
       </div>
     </div>
-    <h3>热门短评</h3>
-    <div class="shortcom" v-for="item in arr" :key="item">
-      <div class="opin">
-        <div class="mark">
-          <span class="star"></span>
-          <span class="grade" :style="{'--cwidth':widthc}"></span>
-        </div>
-        <span class="times">{{item.dateTime | dateFormate}}</span>
+    <div class="cmts">
+      <h3>热门短评</h3>
+      <div v-if="cmtFlag">
+        <div class="tips">这里空空如也</div>
       </div>
-      <p>{{item.info}}</p>
-      <div class="users">
-         
-        <div class="imgs">
-          <img src="../assets/logo.png" />
+      <div v-else>
+        <div>
+          <div class="shortcom" v-for="item in arr" :key="item">
+            <div class="opin">
+              <div class="mark">
+                <span class="star"></span>
+                <span class="grade" :style="{ '--cwidth': widthc }"></span>
+              </div>
+              <div class="times">{{ item.dateTime | dateFormat }}</div>
+            </div>
+            <p>{{ item.info }}</p>
+            <div class="users">
+              <div class="imgs">
+                <img src="../assets/logo.png" />
+              </div>
+              <div class="names">{{ item.userName }}</div>
+            </div>
+            <hr />
+          </div>
+          <div class="btn" @click="goShort($route.params.id, obj.name)">
+            查看全部短评
+          </div>
+          <hr />
+          <div class="btn">查看全部影评</div>
         </div>
-         
-        <div class="names">{{item.userName}}</div>
       </div>
-      <hr />
     </div>
-    <div class="btn" @click="goShort($route.params.id,obj.name)">查看全部短评</div>
-    <hr />
-    <div class="btn">查看全部影评</div>
   </div>
 </template>
 <script>
@@ -78,32 +99,44 @@ export default {
     return {
       obj: {},
       ratingNum: 0,
-      widths: "50%",
-      arr:[],
-      widthc:0,
-      ratingLevel:1
+      widths: "0%",
+      arr: [],
+      widthc: 0,
+      ratingLevel: 1,
+      listFlag: true,
+      actorFlag: true,
+      cmtFlag: true,
     };
   },
   methods: {
     goback() {
-      window.history.go(-1);
+      this.$router.push({ name: "searchs" });
     },
-    goShort(id,name){
-       this.$router.push({name:'shortComments',params:{id,name}})
-    }
+    goShort(id, name) {
+      this.$router.push({ name: "shortComments", params: { id, name } });
+    },
   },
   mounted: function () {
     this.$http
-      .post("http://192.168.0.103:8888/movieInfo", {
+      .post("movieInfo", {
         id: this.$route.params.id,
       })
       .then(
         function (res) {
+          this.ratingNum = 0;
+          this.listFlag = true;
+          this.actorFlag = true;
           if (res.status === 200) {
             this.obj = res.data;
-            this.widths = this.obj.ratingNum * 10 + "%";
-            if(this.obj.ratingNum){
-                this.ratingNum = this.obj.ratingNum
+            if (this.obj.ratingNum) {
+              this.ratingNum = this.obj.ratingNum;
+            }
+            this.widths = this.ratingNum * 10 + "%";
+            if (this.obj.directorList && this.obj.directorList !== []) {
+              this.listFlag = false;
+              if (this.obj.actorList && this.obj.actorList !== []) {
+                this.actorFlag = false;
+              }
             }
           } else {
             console.log(res.status);
@@ -113,22 +146,29 @@ export default {
           console.log("failed");
         }
       );
-    this.$http.post("http://192.168.0.103:8888/rtating",{
-      ratingLevel:this.ratingLevel,
-      movieId:this.$route.params.id
-    }).then(
-      function(res){
-        if(res.status === 200){
-          this.arr = res.data
-        } else {
-          console.log(res.status)
+    this.$http
+      .post("rtating", {
+        ratingLevel: this.ratingLevel,
+        movieId: this.$route.params.id,
+      })
+      .then(
+        function (res) {
+          this.cmtFlag = true;
+          if (res.status === 200) {
+            if (res.data && res.data.length !== 0) {
+              this.arr = res.data;
+              this.cmtFlag = false;
+            }
+          } else {
+            console.log(res.status);
+          }
+        },
+        function (res) {
+          console.log(res.status);
         }
-      },
-      function(res){
-        console.log(res.status)
-      }
-    )
+      );
   },
+  beforeUpdate: function () {},
 };
 </script>
 <style scoped>
@@ -239,6 +279,7 @@ export default {
   margin-right: 2%;
   margin-top: 5px;
   margin-bottom: 20px;
+  text-align: justify;
 }
 .actors {
   margin-left: 2%;
@@ -253,10 +294,24 @@ h3 {
   display: flex;
   flex-wrap: nowrap;
   overflow-x: auto;
+  height: 120px;
+  align-items: center;
 }
 .msgsrc .listsrc {
-  width: 70px;
+  width: 100px;
   margin-left: 8px;
+  text-align: center;
+}
+
+.msgsrc .tips {
+  margin: auto 28px;
+  width: 100px;
+}
+.actors .nullist {
+  height: 30px;
+}
+.actors .nullist .tips {
+  margin-left: 0;
 }
 .msgsrc .listsrc .imgs {
   overflow: hidden;
@@ -267,12 +322,17 @@ h3 {
   overflow: hidden;
   text-decoration: ellipsis;
 }
-.shortcom {
-  margin-top: 20px;
+.cmts {
   margin-left: 2%;
   margin-right: 2%;
+  margin-top: 22px;
+  overflow: hidden;
+}
+.tips {
+  font-style: italic;
 }
 .shortcom .opin {
+  margin-top: -5px;
   overflow: hidden;
 }
 .shortcom .opin .mark {
@@ -282,8 +342,9 @@ h3 {
   width: var(--widthc);
 }
 .shortcom .opin .times {
-  display: inline-block;
-  line-height: 36px;
+  float: left;
+  margin-left: 10px;
+  line-height: 34px;
 }
 .shortcom p {
   margin-bottom: 10px;

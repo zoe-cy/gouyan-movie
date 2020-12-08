@@ -1,7 +1,7 @@
 <template>
   <div class="comments">
     <div class="header">
-      <a class="iconfont icon-arrow-left"></a>
+      <span class="iconfont icon-arrow-left" @click="goback"></span>
       <span>短评--{{ $route.params.name }}</span>
     </div>
     <div class="shortcom" v-for="item in arr" :key="item">
@@ -10,15 +10,13 @@
           <span class="star"></span>
           <span class="grade" :style="{ '--cwidth': item.level*10+'%' }"></span>
         </div>
-        <span class="times">{{ item.dateTime | dateFormate }}</span>
+        <span class="times">{{ item.dateTime | dateFormat }}</span>
       </div>
       <p>{{ item.info }}</p>
       <div class="users">
-         
         <div class="imgs">
           <img src="../assets/logo.png" />
-        </div>
-         
+        </div> 
         <div class="names">{{ item.userName }}</div>
       </div>
       <hr />
@@ -29,15 +27,21 @@
 export default {
   data: function () {
     return {
+      id:this.$route.params.id,
       arr: [],
       ratingLevel: 0,
     };
   },
+  methods:{
+     goback(){
+         this.$router.push({name:'filmDetail',params:{id:this.id}})
+     }
+  },
   mounted: function () {
     this.$http
-      .post("http://192.168.0.103:8888/rtating", {
+      .post("rtating", {
         ratingLevel: this.ratingLevel,
-        movieId: this.$route.params.id
+        movieId: this.id
       })
       .then(
         function (res) {
@@ -67,12 +71,12 @@ export default {
   letter-spacing: 2px;
   text-align: center;
 }
-.header a {
+.header .iconfont {
   position: absolute;
   left: 3%;
   line-height: 60px;
 }
-.header a::before {
+.header .iconfont::before {
   font-size: 34px;
 }
 .header span {
