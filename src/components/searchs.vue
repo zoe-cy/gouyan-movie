@@ -1,37 +1,12 @@
 <template>
   <div class="search">
     <div class="header">
-      <input type="text" @keyup.enter="searching" ref="ipt" />
+      <input type="text" @keyup.enter="searching" v-model="ipt" />
       <span @click="goback">取消</span>
     </div>
-    <div v-if="flag">
-      <p>热门搜索</p>
-      <div class="nav">
-        <span>流浪地球</span>
-        <span>流浪地球33333333</span>
-        <span>流浪地球</span>
-        <span>流浪地球</span>
-        <span>流浪地球</span>
-      </div>
-    </div>
-    <div v-else>
-      <div
-        class="intro"
-        v-for="item in arr"
-        :key="item.id"
-        @click="gohead(item.id)"
-      >
-        <div class="box">
-          <div class="ins">
-            <img src="../assets/logo.png" />
-          </div>
-          <div class="infos">
-            <h2>{{ item.name }}</h2>
-            <p>{{ item.info }}</p>
-          </div>
-        </div>
-        <hr />
-      </div>
+    <p>热门搜索</p>
+    <div class="nav">
+      <span v-for="item in arr" :key="item.id">{{ item.name }}</span>
     </div>
   </div>
 </template>
@@ -39,7 +14,7 @@
 export default {
   data: function () {
     return {
-      val: "",
+      ipt: "",
       id: "",
       arr: [],
       flag: true,
@@ -47,11 +22,15 @@ export default {
   },
   methods: {
     searching() {
-      this.val = this.$refs.ipt.value;
+       this.$router.push({name:"indexFilms",params:{ipt:this.ipt}})
+    },
+    goback() {
+      window.history.go(-1);
+    },
+  },
+  mounted:function(){
       this.$http
-        .get("search", {
-          params: { name: this.val },
-        })
+        .get('hot')
         .then(
           function (res) {
             if (res.status === 200) {
@@ -65,14 +44,8 @@ export default {
             console.log("failed", res.status);
           }
         );
-    },
-    gohead(id) {
-      this.$router.push({ name: "filmDetail", params: { id } });
-    },
-    goback(){
-      window.history.go(-1)
-    }
-  },
+    
+  }
 };
 </script>
 <style scoped>
