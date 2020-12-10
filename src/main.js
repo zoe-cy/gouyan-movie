@@ -8,8 +8,10 @@ import App from './App'
 Vue.config.productionTip = false
 
 Vue.filter('rateFormat',function(val){
-    if(Math.floor(val) === val){
+    if( String(val).indexOf('.') === -1){
       return val+".0"
+    } else {
+      return val
     }
 })
 

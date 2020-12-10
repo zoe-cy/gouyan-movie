@@ -22,7 +22,7 @@ export default {
   },
   methods: {
     searching() {
-       this.$router.push({name:"indexFilms",params:{ipt:this.ipt}})
+       this.$router.push({name:"indexFilms",params:{name:this.ipt}})
     },
     goback() {
       window.history.go(-1);
@@ -30,7 +30,7 @@ export default {
   },
   mounted:function(){
       this.$http
-        .get('hot')
+        .get('search')
         .then(
           function (res) {
             if (res.status === 200) {

@@ -35,7 +35,7 @@
         </div>
         <div v-else>
           <div class="msgsrc">
-            <div class="listsrc" v-for="item in obj.directorList" :key="item">
+            <div class="listsrc" v-for="item in obj.directorList" :key="item" @click="goPerson(item.derectorId)">
               <div class="imgs">
                 <img src="../assets/logo.png" />
               </div>
@@ -44,12 +44,7 @@
             <div v-if="actorFlag">
               <div class="listsrc tips">暂无演员资料</div>
             </div>
-            <div
-              v-else
-              class="listsrc"
-              v-for="item in obj.actorList"
-              :key="item"
-            >
+            <div v-else class="listsrc" v-for="item in obj.actorList" :key="item"  @click="goPerson(item.actorId)">
               <div class="imgs">
                 <img src="../assets/logo.png" />
               </div>
@@ -115,6 +110,9 @@ export default {
     goShort(id, name) {
       this.$router.push({ name: "shortComments", params: { id, name } });
     },
+    goPerson(id) {
+      this.$router.push({ name: "personDetail", params: { id } });
+    },
   },
   mounted: function () {
     this.$http
@@ -168,7 +166,6 @@ export default {
         }
       );
   },
-  beforeUpdate: function () {},
 };
 </script>
 <style scoped>

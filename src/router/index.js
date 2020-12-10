@@ -7,12 +7,13 @@ import filmDetail from '../components/filmDetail.vue'
 import filmComments from '../components/filmComments'
 import shortComments from '../components/shortComments'
 import indexFilms from '../components/indexFilms'
+import personDetail from '../components/personDetail'
 Vue.use(Router)
 
 export default new Router({
     routes:[
         {
-            path:'/indexFilms',
+            path:'/indexFilms/:name',
             name:'indexFilms',
             component:indexFilms
         },
@@ -32,7 +33,7 @@ export default new Router({
             component:searchs
         },
         {
-            path:'/filmDetail/:id',
+            path:'/filmDetail',
             name:'filmDetail',
             component:filmDetail
         },
@@ -45,6 +46,11 @@ export default new Router({
             path:'/shortComments',
             name:'shortComments',
             component:shortComments
+        },
+        {
+            path:'/personDetail',
+            name:'personDetail',
+            component:personDetail 
         }
     ]
 })
